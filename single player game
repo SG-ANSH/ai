@@ -1,0 +1,40 @@
+import random
+
+# Define the game state
+class GameState:
+    def __init__(self):
+        self.target_number = random.randint(1, 100)
+        self.attempts = 0
+
+# Define a heuristic function to evaluate the current state
+def heuristic(game_state, guess):
+    # We'll use the absolute difference between the guess and the target as the heuristic value
+    return abs(guess - game_state.target_number)
+
+# Define the game loop
+def play_game():
+    game_state = GameState()
+    print("Welcome to Guess the Number!")
+    print("I've selected a random number between 1 and 100.")
+    
+    while True:
+        guess = int(input("Enter your guess: "))
+        game_state.attempts += 1
+        
+        if guess < 1 or guess > 100:
+            print("Please guess a number between 1 and 100.")
+        else:
+            h_value = heuristic(game_state, guess)
+            
+            if h_value == 0:
+                print(f"Congratulations! You've guessed the number {game_state.target_number} in {game_state.attempts} attempts.")
+                break
+            else:
+                if guess < game_state.target_number:
+                    print("Try a higher number.")
+                else:
+                    print("Try a lower number.")
+
+# Start the game
+if __name__ == "__main__":
+    play_game()
